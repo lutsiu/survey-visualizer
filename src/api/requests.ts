@@ -2,9 +2,16 @@ import { http } from "./http";
 
 import type {Difficulty, Category, TriviaQuestion} from "../types/types";
 
-type getQuestionsResponse = {
+type GetQuestionsResponse = {
   response_code: number, 
   results: TriviaQuestion[]
+}
+
+type GetQuestionsParams = {
+  amount: number;
+  token?: string,
+  categoryId?:number,
+  difficulty: Difficulty
 }
 
 export async function getRequestToken(): Promise<string> {
@@ -24,11 +31,63 @@ export async function getCategories(): Promise<Category[]> {
   return res.data.trivia_categories;
 }
 
-export async function getQuestions(amount: number, token?: string): Promise<getQuestionsResponse> {
-  const res = await http.get<getQuestionsResponse>(
+// REQUEST TO GET ALL QUESTIONS WITH CUSTOM PARAMS
+
+export async function getQuestionsByParams(params: GetQuestionsParams): Promise<GetQuestionsResponse> {
+  const {amount, token, categoryId, difficulty} = params;
+  const safeAmount = Math.min(Math.max(1, amount), 50);
+
+  const res = await http.get<GetQuestionsResponse>(
+    "/api.php",
+    {
+      params: {
+        amount: safeAmount,
+        token,
+        ...(categoryId ? {category: categoryId} : {}),
+        ...(difficulty ? {difficulty} : {}),
+      }
+    }
+  )
+
+  return res.data;
+}
+
+// FUNCTIONS BELOW ARE SIMPLE FUNCTIONS IF YOU'D LIKE TO USE A FEW ARGS INSTEAD OF OBJECT OF PARAMS
+
+export async function getQuestions(amount: number, token?: string): Promise<GetQuestionsResponse> {
+  const res = await http.get<GetQuestionsResponse>(
     "/api.php",
     {params: {amount, token}}
   )
 
+  return res.data;
+}
+
+export async function getQuestionsByCategory(amount: number, category: number,
+   token?: string): Promise<GetQuestionsResponse> {
+  
+  const res = await http.get<GetQuestionsResponse>(
+    "/api.php",
+    {params: {amount, category, token}}
+  );
+  return res.data;
+}
+export async function getQuestionsByDifficulty(amount: number, difficulty: Difficulty,
+   token?: string): Promise<GetQuestionsResponse> {
+  
+  const res = await http.get<GetQuestionsResponse>(
+    "/api.php",
+    {params: {amount, difficulty, token}}
+  );
+  return res.data;
+}
+
+export async function getQuestionsByCategoryAndDifficulty(amount: number, category: number, difficulty: Difficulty,
+   token?: string): Promise<GetQuestionsResponse> {
+  
+  const res = await http.get<GetQuestionsResponse>(
+    "/api.php",
+    {params: {amount, category, difficulty, token}}
+  );
   return res.data;
 }
