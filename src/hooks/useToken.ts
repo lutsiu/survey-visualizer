@@ -38,8 +38,9 @@ export default function useToken() {
           setStoredToken(t);
           setToken(t);
         }
-      } catch (er: any) {
-        if (!cancelled) setError(er.message ?? "Failed to get a token");
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Failed to fetch categories";
+        if (!cancelled) setError(message);
       } finally {
         if (!cancelled) setLoading(false);
       }

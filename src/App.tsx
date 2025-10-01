@@ -1,7 +1,8 @@
-import useToken from "./hooks/useToken";
+import { useInit } from "./hooks/useInit";
+
 
 function App() {
-  const {loading, error, refresh, token} = useToken();
+  const {loading, error, token} = useInit();
 
   return (
     <>
