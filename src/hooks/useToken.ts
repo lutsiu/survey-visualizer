@@ -45,7 +45,7 @@ export default function useToken() {
       }
     } 
     fetchToken();
-    return () => {cancelled = true};
+    return () => {cancelled = true;};
   }, [token]);
 
   const refresh = async () => {

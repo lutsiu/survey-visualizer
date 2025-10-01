@@ -1,18 +1,9 @@
 import { http } from "./http";
 
-import type {Difficulty, Category, TriviaQuestion} from "../types/types";
+import type {Difficulty, Category, GetQuestionsResponse,
+GetQuestionsParams} from "../types/types";
 
-type GetQuestionsResponse = {
-  response_code: number, 
-  results: TriviaQuestion[]
-}
 
-type GetQuestionsParams = {
-  amount: number;
-  token?: string,
-  categoryId?:number,
-  difficulty: Difficulty
-}
 
 export async function getRequestToken(): Promise<string> {
 
