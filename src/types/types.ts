@@ -14,3 +14,14 @@ export interface TriviaQuestion {
   incorrect_answers: string[];
 }
 
+export type GetQuestionsResponse = {
+  response_code: number, 
+  results: TriviaQuestion[]
+}
+
+export type GetQuestionsParams = {
+  amount: number;
+  token?: string,
+  categoryId?:number,
+  difficulty: Difficulty
+}
