@@ -1,37 +1,46 @@
-import { useEffect } from "react";
-import { useCategoriesStore } from "../store/categoriesStore";
-import { useQuestionsStore } from "../store/questionsStore";
+import { useEffect, useRef } from "react";
+import { useStore } from "zustand";
+import { categoriesStore } from "../store/categoriesStore";
+import { questionsStore } from "../store/questionsStore";
 import useToken from "./useToken";
 
 export function useInit() {
-  // fetch all data from useToken
-  const {loading: tokenLoading, error: tokenError, token} = useToken();
+  const { loading: tokenLoading, error: tokenError, token } = useToken();
 
-  // fetch all data from categs store
-  const { catsHaveLoaded, loading: catsLoading, error: catsError, load: loadCats } =
-    useCategoriesStore(s => 
-      ({ catsHaveLoaded: s.hasLoaded, loading: s.loading, error: s.error, load: s.load }));
+  const catsHaveLoaded = useStore(categoriesStore, s => s.hasLoaded);
+  const catsLoading    = useStore(categoriesStore, s => s.loading);
+  const catsError      = useStore(categoriesStore, s => s.error);
+  const loadCats       = useStore(categoriesStore, s => s.load);
 
-  // fetch all data from quests store
-  const { questsItems, loading: qsLoading, error: qsError, load: loadQs } =
-    useQuestionsStore(s => ({ questsItems: s.items, loading: s.loading, error: s.error, load: s.load }));
+  const questsCount    = useStore(questionsStore, s => s.items.length);
+  const qsLoading      = useStore(questionsStore, s => s.loading);
+  const qsError        = useStore(questionsStore, s => s.error);
+  const loadQs         = useStore(questionsStore, s => s.load);
 
-  // useEffect with aim to load categories
+  const startedCats = useRef(false);
+  const startedQs   = useRef(false);
+
   useEffect(() => {
+    if (startedCats.current) return;
     if (!catsHaveLoaded && !catsLoading) {
+      startedCats.current = true;
       loadCats();
     }
-  }, [loadCats, catsHaveLoaded, catsLoading]); 
+    console.log("cats loading successful")
+  }, [catsHaveLoaded, catsLoading, loadCats]);
 
-  // useEffect with aim to load questions
   useEffect(() => {
-    if (!token || qsLoading || questsItems.length) return;
+    if (startedQs.current) return;
+    if (!token || qsLoading || questsCount) return;
+    startedQs.current = true;
     loadQs(50, token);
-  }, [token, qsLoading, questsItems.length, loadQs]);
+    console.log('loading successful');
+  }, [token, qsLoading, questsCount, loadQs]);
 
   return {
     loading: tokenLoading || catsLoading || qsLoading,
-    error: tokenError || catsError || qsError,
-    token
+    error:   tokenError   || catsError   || qsError,
+    token,
+    
   };
 }
