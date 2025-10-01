@@ -27,8 +27,9 @@ export const useQuestionsStore = create<QuestionsState>((set) => ({
     try {
         const res = await getQuestions(amount, token);
         set({items: res.results, loading: false});
-    } catch (err: any) {
-      set({loading: false, error: err?.message ?? "Failed to load questions"});
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to load questions";  
+      set({loading: false, error: message});
     }
   },
   loadByParams: async (params) => {
@@ -36,8 +37,9 @@ export const useQuestionsStore = create<QuestionsState>((set) => ({
     try {
       const res = await getQuestionsByParams(params);
       set({items: res.results, loading: false});
-    } catch (err: any) {
-      set({loading: false, error: err?.message ?? "Failed to load questions"})
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to load questions";  
+      set({loading: false, error: message})
     }
   }
 }));
