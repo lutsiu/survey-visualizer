@@ -39,3 +39,19 @@ export function groupByDifficulty(qs: TriviaQuestion[]):Array<{name: Difficulty,
     value: counts[d]
   }));
 }
+
+export function groupDifficultyForCategory(
+  qs: TriviaQuestion[],
+  selectedCategory: string | "All"
+) {
+  const filtered = filterByCategoryName(qs, selectedCategory);
+  return groupByDifficulty(filtered);
+}
+
+export function filterByCategoryName(
+  qs: TriviaQuestion[],
+  categoryName?: string | "All"
+): TriviaQuestion[] {
+  if (!categoryName || categoryName === "All") return qs;
+  return qs.filter(q => normalizeName(q.category) === categoryName);
+}

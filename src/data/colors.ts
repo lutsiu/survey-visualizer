@@ -11,3 +11,9 @@ export  const badgeTone: Record<Difficulty, string> = {
     medium: "bg-amber-500/15  border-amber-500/30  text-amber-300",
     hard:   "bg-rose-500/15   border-rose-500/30   text-rose-300",
   };
+
+export  const DIFF_COLORS: Record<Difficulty, string> = {
+  easy:   "#10b981", // emerald-500
+  medium: "#f59e0b", // amber-500
+  hard:   "#ef4444", // rose/red-500
+};
