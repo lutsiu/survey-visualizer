@@ -6,6 +6,7 @@ import { groupByCategory } from "../selectors/selectors";
 import {
   Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
+import { useLoading } from "../hooks/useLoading";
 
 interface Props {
   selected?: string;
@@ -15,7 +16,8 @@ interface Props {
 export default function QuestionsByCategoriesChart({ selected = "All", onSelect }: Props) {
   const cats = useStore(categoriesStore, (s) => s.items);
   const qs   = useStore(questionsStore, (s) => s.items);
-
+  const {loading} = useLoading(); 
+  
   const data = useMemo(() => groupByCategory(qs, cats), [qs, cats]);
 
   if (!data.length) {
@@ -37,7 +39,9 @@ export default function QuestionsByCategoriesChart({ selected = "All", onSelect 
   return (
     <div className="w-full max-w-[80rem] h-[32rem] rounded-[1.2rem] border border-white/10 bg-white/5 p-[1.6rem]">
       <h3 className="text-[1.6rem] font-semibold mb-[1.2rem]">Questions by Category</h3>
-
+      {loading && (
+        <p className="text-[1.4rem] opacity-75 mb-[1.2rem]">Loading questions…</p>
+      )}
       <div className="w-full h-[26rem]"> 
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 10, right: 10, bottom: 30, left: 10 }} barCategoryGap={16}>

@@ -1,9 +1,9 @@
 import { useStore } from "zustand";
 import { questionsStore } from "../store/questionsStore";
-import { categoriesStore } from "../store/categoriesStore";
 import { badgeTone, itemTone } from "../data/colors";
 import { filterByCategoryName } from "../selectors/selectors";
 import { useMemo } from "react";
+import { useLoading } from "../hooks/useLoading";
 
 interface Props {
   selected?: string;
@@ -11,22 +11,19 @@ interface Props {
 
 export default function QuestionsList({selected}: Props) {
   const qs         = useStore(questionsStore, s => s.items);
-  const qsLoading  = useStore(questionsStore, s => s.loading);
-  const catsLoading= useStore(categoriesStore, s => s.loading);
-
-    const items = useMemo(() => filterByCategoryName(qs, selected), [qs, selected]);
+  const {loading} = useLoading(); 
+  const items = useMemo(() => filterByCategoryName(qs, selected), [qs, selected]);
 
   return (
     <section className="w-full max-w-[80rem] mx-auto">
       <h5 className="text-[1.6rem] font-semibold mb-[1.2rem]">Questions</h5>
 
-      {/* loading */}
-      {(qsLoading || catsLoading) && (
+      {loading && (
         <p className="text-[1.4rem] opacity-75 mb-[1.2rem]">Loading questions…</p>
       )}
 
       {/* empty */}
-      {!qsLoading && !catsLoading && items.length === 0 && (
+      {!loading && items.length === 0 && (
         <p className="text-[1.4rem] opacity-75">No questions to show for {selected}.</p>
       )}
 

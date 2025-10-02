@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import type { Difficulty } from "../types/types";
 import { DIFF_COLORS } from "../data/colors";
+import { useLoading } from "../hooks/useLoading";
 
 interface Props {
   selected?: string;
@@ -48,11 +49,14 @@ export default function QuestionsByDifficultyChart({ selected = "All" }: Props) 
   const nonZeroData = useMemo(() => data.filter((d) => d.value > 0), [data]);
 
   const showEmpty = nonZeroData.length === 0;
+  const {loading} = useLoading(); 
 
   return (
     <div className="w-full max-w-[80rem] h-[32rem] rounded-[1.2rem] border border-white/10 bg-white/5 p-[1.6rem]">
       <h3 className="text-[1.6rem] font-semibold mb-[1.2rem]">Questions by Difficulty</h3>
-
+      {loading && (
+        <p className="text-[1.4rem] opacity-75 mb-[1.2rem]">Loading questions…</p>
+      )}
       <div className="w-full h-[26rem]">
         {showEmpty ? (
           <div className="w-full h-full flex items-center justify-center">

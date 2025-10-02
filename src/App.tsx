@@ -40,3 +40,11 @@ function App() {
 }
 
 export default App;
+/* 
+I'd create it as a module (smthg like features/trivial-visualizer) with API dir, Zustand stores, selectors, compoennts, maybe some data (like colors, etc). I'd create visualizer dashboard component and keep data contracts type Category, TriviaQuestion, etc. I'd also hook theme/system tokens so Recharts would keep same styles for UI. 
+
+For perfomance i'd memoize selectors and data like arrays.
+
+For data structure i'd use Zustand stores, and align data structures with existing domain models.
+
+Challenges: ensure UI consistency, performance, especially considering slow internet connection, align data structures with existing domain models. */
