@@ -3,11 +3,14 @@ import { useInit } from "./hooks/useInit";
 import { categoriesStore } from "./store/categoriesStore";
 import { questionsStore } from "./store/questionsStore";
 import { groupByCategory, groupByDifficulty } from "./selectors/selectors";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Header from "./components/Header";
+import Controlls from "./components/Controlls";
 
 
 function App() {
   const {loading, error, token} = useInit();
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const cats = useStore(categoriesStore, s => s.items);
   const qs   = useStore(questionsStore, s => s.items);
 
@@ -21,9 +24,15 @@ function App() {
     }
   }, [loading, error, token, qs,cats]);
   return (
-    <div>
-      Hi
-    </div>
+    <main className="flex flex-col min-h-screen w-full">
+      <header>
+        <Header/>
+        <Controlls token={token} onChange={setSelectedCategory} selected={selectedCategory  }/>
+      </header>
+      <section className="flex justify-center items-center">
+       
+      </section>
+    </main>
   );
 }
 

@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -11,8 +9,13 @@
   --font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
 }
 
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  min-height: 100vh;
   font-family: var(--font-family);
   font-size: 1.6rem;
+  @apply bg-black text-white;
 }
