@@ -6,6 +6,7 @@ import { groupByCategory, groupByDifficulty } from "./selectors/selectors";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Controlls from "./components/Controlls";
+import QuestionsList from "./components/QuestionsList";
 
 
 function App() {
@@ -24,13 +25,13 @@ function App() {
     }
   }, [loading, error, token, qs,cats]);
   return (
-    <main className="flex flex-col min-h-screen w-full">
+    <main className="flex flex-col min-h-screen w-full py-[5rem]">
       <header>
         <Header/>
         <Controlls token={token} onChange={setSelectedCategory} selected={selectedCategory  }/>
       </header>
       <section className="flex justify-center items-center">
-       
+        <QuestionsList/>
       </section>
     </main>
   );
