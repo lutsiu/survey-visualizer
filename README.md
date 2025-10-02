@@ -1,73 +1,124 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```markdown
+# OpenTDB Visualizer
 
-Currently, two official plugins are available:
+A mini data visualization tool built with **React + Vite**, using the [Open Trivia DB API](https://opentdb.com).  
+It lets you explore trivia questions, filter by category, and view distributions by **category** and **difficulty**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
+- Fetches 50+ trivia questions from OpenTDB.
+- Dropdown to filter questions by category.
+- Interactive **Bar Chart** (questions by category).
+- Interactive **Pie Chart** (questions by difficulty).
+- Styled with **Tailwind CSS**.
+- State management with **Zustand**.
+- Responsive layout with `Recharts` for data visualization.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+````
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+src/
+- api/          API requests (fetch token, questions, categories)
+- components/   Reusable UI components (Header, Controls, Charts, List)
+- data/         Static config (colors, constants)
+- hooks/         Custom hooks (e.g., useInit, useToken)
+- selectors/    Selectors to group/filter questions
+- store/        Zustand stores (categories, questions)
+- types/        TypeScript types for questions, categories, API responses
+- App.tsx       Root component
+- main.tsx      React/Vite entry point
+- index.css     Tailwind & global styles
+- App.css       Additional styles
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+````
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Installation & Setup
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-username>/<your-repo>.git
+   cd <your-repo>
+````
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Run in development mode:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Build for production:
+
+   ```bash
+   npm run build
+   ```
+
+5. (Optional) Preview the build locally:
+
+   ```bash
+   npm run preview
+   ```
+
+---
+
+##  Deployment
+
+This project can be deployed as a static site on **GitHub Pages**, **Vercel**, or **Netlify**.
+
+### GitHub Pages Deployment
+
+1. Install gh-pages:
+
+   ```bash
+   npm install -D gh-pages
+   ```
+
+2. Add the following to your `package.json`:
+
+   ```json
+   {
+     "homepage": "https://<your-username>.github.io/<your-repo>/",
+     "scripts": {
+       "predeploy": "npm run build",
+       "deploy": "gh-pages -d dist"
+     }
+   }
+   ```
+
+3. Deploy with:
+
+   ```bash
+   npm run deploy
+   ```
+
+---
+
+
+##  Tech Stack
+
+* [React](https://react.dev/)
+* [Vite](https://vitejs.dev/)
+* [Tailwind CSS](https://tailwindcss.com/)
+* [Recharts](https://recharts.org/)
+* [Zustand](https://github.com/pmndrs/zustand)
+
+---
+
+## 📜 License
+
+MIT – free to use, modify, and share.
+
+
+
