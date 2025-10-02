@@ -2,13 +2,19 @@ import { useStore } from "zustand";
 import { questionsStore } from "../store/questionsStore";
 import { categoriesStore } from "../store/categoriesStore";
 import { badgeTone, itemTone } from "../data/colors";
+import { filterByCategoryName } from "../selectors/selectors";
+import { useMemo } from "react";
 
-export default function QuestionsList() {
+interface Props {
+  selected?: string;
+}
+
+export default function QuestionsList({selected}: Props) {
   const qs         = useStore(questionsStore, s => s.items);
   const qsLoading  = useStore(questionsStore, s => s.loading);
   const catsLoading= useStore(categoriesStore, s => s.loading);
 
-  
+    const items = useMemo(() => filterByCategoryName(qs, selected), [qs, selected]);
 
   return (
     <section className="w-full max-w-[80rem] mx-auto">
@@ -20,12 +26,12 @@ export default function QuestionsList() {
       )}
 
       {/* empty */}
-      {!qsLoading && !catsLoading && qs.length === 0 && (
-        <p className="text-[1.4rem] opacity-75">No questions to show.</p>
+      {!qsLoading && !catsLoading && items.length === 0 && (
+        <p className="text-[1.4rem] opacity-75">No questions to show for {selected}.</p>
       )}
 
       <ul className="grid gap-[1.2rem] max-h-[60rem] overflow-auto pr-[0.6rem]">
-        {qs.map((q, i) => (
+        {items.map((q, i) => (
           <li
             key={i}
             className={[

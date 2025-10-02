@@ -33,7 +33,7 @@ function App() {
       <section className="flex flex-col justify-center items-center gap-[5rem] pt-[5rem]">
         <QuestionsByCategoriesChart selected={selectedCategory} onSelect={setSelectedCategory}/>
         <QuestionsByDifficultyChart selected={selectedCategory}/>
-        <QuestionsList />
+        <QuestionsList selected={selectedCategory} />
       </section>
     </main>
   );
