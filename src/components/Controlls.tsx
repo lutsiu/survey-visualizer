@@ -19,7 +19,7 @@ export default function Controlls({ selected, onChange, token }: Props) {
   };
 
   return (
-    <div className="flex justify-center pt-[5rem] gap-[10rem]">
+    <div className="flex flex-col md:flex-row items-center justify-center pt-[5rem] gap-[4rem] md:gap-[10rem]">
       {/* Category dropdown */}
       <label className="flex items-center gap-[1rem]">
         <span className="text-[1.4rem]">Category:</span>
@@ -48,7 +48,7 @@ export default function Controlls({ selected, onChange, token }: Props) {
       <button
         onClick={handleRefresh}
         disabled={!token || qsLoading}
-        className="border border-gray-600 rounded-[0.5rem] px-[2rem] py-[1rem] text-[1.4rem] bg-[#1e1e1e] text-white hover:bg-[#2a2a2a] disabled:opacity-50"
+        className="w-fit border border-gray-600 rounded-[0.5rem] px-[2rem] py-[1rem] text-[1.4rem] bg-[#1e1e1e] text-white hover:bg-[#2a2a2a] disabled:opacity-50"
       >
         {qsLoading ? "Refreshing…" : "Refresh Data"}
       </button>

@@ -20,7 +20,7 @@ function App() {
   }, [error]);
 
   return (
-    <main className="flex flex-col min-h-screen w-full py-[5rem]">
+    <main className="flex flex-col min-h-screen w-full py-[5rem] px-[3rem]">
       <Toaster
         toastOptions={{
           style: { background: "#111", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" },
